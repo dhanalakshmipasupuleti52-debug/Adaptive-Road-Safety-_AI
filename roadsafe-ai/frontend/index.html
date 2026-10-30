@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><title>RoadSafe AI</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{color-scheme:dark;--bg:#050b18;--bg2:#0a1630;--card:rgba(255,255,255,.05);--bd:rgba(120,220,255,.16);--tx:#eaf6ff;--mut:#8fa6c0;--cy:#22d3ee;--ok:#34d399;--wa:#fbbf24;--bad:#f43f5e;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(1200px 600px at 70% -10%,#0b2a55 0,var(--bg) 60%),var(--bg);color:var(--tx);font:15px/1.55 Inter,system-ui,sans-serif;min-height:100vh}
+h1,h2,h3,.logo{font-family:'Space Grotesk',Inter,sans-serif;margin:0}
+a{color:inherit;text-decoration:none}
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:rgba(5,11,24,.8);backdrop-filter:blur(14px);border-bottom:1px solid var(--bd)}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:rgba(5,11,24,.9);z-index:30}
+nav{max-width:1200px;margin:auto;display:flex;align-items:center;gap:6px;padding:10px 16px}
+.logo{font-weight:700;font-size:20px;margin-right:auto}.logo b{color:var(--cy)}
+.links{display:flex;gap:2px;overflow-x:auto}
+.links a{padding:7px 12px;border-radius:99px;color:var(--mut);white-space:nowrap;font-size:14px}
+.links a.on,.links a:hover{color:var(--tx);background:var(--card)}
+.btn{display:inline-block;border:0;cursor:pointer;padding:11px 20px;border-radius:12px;font:600 14px Inter;color:#02121c;background:linear-gradient(135deg,#22d3ee,#60a5fa)}
+.btn.g{background:var(--card);color:var(--tx);border:1px solid var(--bd)}.btn.s{padding:6px 12px;font-size:12px}.btn.red{background:var(--bad);color:#fff}
+main{max-width:1200px;margin:auto;padding:24px 16px 60px}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:18px;padding:18px;backdrop-filter:blur(8px)}
+.grid{display:grid;gap:14px}.g2{grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}.g4{grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}
+.hero{display:grid;gap:30px;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));align-items:center;padding:30px 0}
+.hero h1{font-size:clamp(36px,6vw,64px);line-height:1.05;background:linear-gradient(120deg,#fff,#22d3ee);-webkit-background-clip:text;background-clip:text;color:transparent}
+.tag{color:var(--cy);font-weight:600;letter-spacing:.04em;margin-bottom:10px}.mut{color:var(--mut)}
+.pill{display:inline-block;padding:5px 12px;border-radius:99px;border:1px solid var(--bd);font-size:12px;margin:4px 6px 0 0;background:var(--card)}
+.demo{background:rgba(251,191,36,.1);border:1px solid rgba(251,191,36,.4);color:var(--wa);padding:8px 12px;border-radius:10px;font-size:13px;margin-bottom:14px}
+.big{font:700 44px 'Space Grotesk';line-height:1}.lbl{font-size:12px;color:var(--mut);text-transform:uppercase;letter-spacing:.06em}
+.flow{display:grid;gap:8px}.step{display:flex;gap:14px;align-items:center}.step i{font:700 14px 'Space Grotesk';width:34px;height:34px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(135deg,#22d3ee,#60a5fa);color:#02121c;flex:none;font-style:normal}
+.arrow{margin-left:16px;color:var(--cy)}
+.drv{max-width:440px;margin:auto}
+.status{padding:12px;border-radius:14px;text-align:center;font-weight:700;margin-top:10px;transition:.3s}
+.s-ok{background:rgba(52,211,153,.15);color:var(--ok)}.s-wa{background:rgba(251,191,36,.15);color:var(--wa)}.s-bad{background:rgba(244,63,94,.2);color:var(--bad);animation:pulse 1s infinite}
+@keyframes pulse{50%{box-shadow:0 0 0 8px rgba(244,63,94,.15)}}
+input,select{background:rgba(255,255,255,.06);border:1px solid var(--bd);color:var(--tx);border-radius:10px;padding:9px 11px;font:inherit;width:100%}input[type=range]{padding:0}
+label{font-size:13px;color:var(--mut);display:block;margin:10px 0 4px}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}.row>*{flex:1}
+.pol{display:grid;gap:14px;grid-template-columns:minmax(0,2fr) minmax(0,1fr)}@media(max-width:860px){.pol{grid-template-columns:1fr}}
+.tbl{overflow-x:auto}table{width:100%;border-collapse:collapse;font-size:13px}td,th{padding:8px 6px;text-align:left;border-bottom:1px solid var(--bd);white-space:nowrap}th{color:var(--mut);font-weight:500}
+.sev{padding:2px 9px;border-radius:99px;font-size:11px;font-weight:700}.High{background:rgba(244,63,94,.2);color:var(--bad)}.Medium{background:rgba(251,191,36,.2);color:var(--wa)}.Low{background:rgba(52,211,153,.2);color:var(--ok)}
+svg text{font-family:Inter}
+.ft{margin-top:40px;color:var(--mut);font-size:12px;text-align:center}
+</style></head><body>
+<header><nav><a class="logo" href="#home">RoadSafe <b>AI</b></a><div class="links" id="links"></div><a class="btn" href="#driver">Get Started</a></nav></header>
+<main id="app"></main>
+<script>
+const $=s=>document.querySelector(s),app=$('#app');
+const NAV=[['home','Home'],['driver','Driver App'],['police','Police Dashboard'],['ai','AI Technology'],['features','Features'],['about','About']];
+let cleanup=null;
+const ico=p=>`<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#22d3ee" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${p}</svg>`;
+const I={gauge:'<path d="M12 14l4-4"/><path d="M3.3 17a10 10 0 1117.4 0"/>',bell:'<path d="M6 8a6 6 0 0112 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10 21h4"/>',brain:'<path d="M12 3a4 4 0 00-4 4 3 3 0 00-2 5 3 3 0 002 5 4 4 0 008 0 3 3 0 002-5 3 3 0 00-2-5 4 4 0 00-4-4z"/><path d="M12 3v18"/>',shield:'<path d="M12 2l8 3v6c0 5-3.5 9-8 11-4.5-2-8-6-8-11V5z"/>',map:'<path d="M9 3L3 5v16l6-2 6 2 6-2V3l-6 2z"/><path d="M9 3v16M15 5v16"/>',flame:'<path d="M12 2s5 5 5 10a5 5 0 01-10 0c0-2 1-3 2-4 0 2 1 3 2 3 0-4 1-6 1-9z"/>',phone:'<path d="M22 16.9v3a2 2 0 01-2.2 2 19.8 19.8 0 01-8.6-3.1 19.5 19.5 0 01-6-6A19.8 19.8 0 012.1 4.2 2 2 0 014.1 2h3a2 2 0 012 1.7c.1 1 .4 1.9.7 2.8a2 2 0 01-.5 2.1L8.1 9.9a16 16 0 006 6l1.3-1.3a2 2 0 012.1-.4c.9.3 1.8.6 2.8.7a2 2 0 011.7 2z"/>',chart:'<path d="M3 3v18h18"/><path d="M7 15l4-4 3 3 5-6"/>'};
+
+/* ---------- DEMO DATA (clearly labelled in UI) ---------- */
+const LOC=[['NH-65 Km 12',90,150,120],['Outer Ring Rd Jn 4',70,300,110],['Airport Expy',100,430,200],['Old City Bypass',60,210,260],['Tech Park Rd',50,500,90],['Station Rd',40,120,290]];
+const DEMO=Array.from({length:12},(_,i)=>{const L=LOC[i%6],ex=8+((i*7)%38);return{id:i+1,veh:'VEH-'+(4000+i*137),loc:L[0],lim:L[1]===90?80:L[1]*.0+[80,60,100,50,40,30][i%6],x:L[2]+((i*13)%30),y:L[3]+((i*7)%25),ex,min:5+i*9,status:i<3?'New':i<6?'Acknowledged':'Resolved'}}).map(a=>({...a,spd:a.lim+a.ex,sev:a.ex>25?'High':a.ex>12?'Medium':'Low'}));
+
+/* ---------- HOME ---------- */
+function home(){
+app.innerHTML=`<section class="hero"><div><div class="tag">AI-POWERED ROAD SAFETY</div><h1>Intelligent Roads. Protected Lives.</h1>
+<p class="mut" style="font-size:17px;max-width:520px">An AI-powered road safety platform that detects overspeeding, alerts drivers instantly, and helps traffic authorities respond faster.</p>
+<p><a class="btn" href="#driver">Explore Driver App</a> <a class="btn g" href="#police">Police Dashboard</a></p>
+<div><span class="pill">Real-Time Speed Monitoring</span><span class="pill">AI-Powered Risk Detection</span><span class="pill">Instant Safety Alerts</span></div>
+<p class="tag" style="margin-top:22px">Smarter Roads. Safer Drivers. Faster Response.</p></div>
+<svg viewBox="0 0 480 340" class="card" style="padding:0"><defs><linearGradient id="sk" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0b2a55"/><stop offset="1" stop-color="#050b18"/></linearGradient><linearGradient id="rd" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#16294a"/><stop offset="1" stop-color="#0a1428"/></linearGradient></defs>
+<rect width="480" height="340" fill="url(#sk)" rx="18"/>
+${[40,80,120,330,370,410].map((x,i)=>`<rect x="${x}" y="${120-i%3*26}" width="26" height="${60+i%3*26}" fill="#0f2447" stroke="#22d3ee" stroke-opacity=".4"/>`).join('')}
+<polygon points="215,150 265,150 470,340 10,340" fill="url(#rd)"/><path d="M240 150L240 340" stroke="#22d3ee" stroke-dasharray="10 12" stroke-width="2"><animate attributeName="stroke-dashoffset" from="0" to="-44" dur="1s" repeatCount="indefinite"/></path>
+<g fill="#22d3ee"><rect x="205" y="95" width="70" height="34" rx="8" fill="#050b18" stroke="#22d3ee"/><text x="240" y="118" text-anchor="middle" font-size="15" font-weight="700">80 km/h</text></g>
+<rect x="222" y="250" width="36" height="52" rx="9" fill="#22d3ee"/><rect x="228" y="258" width="24" height="12" rx="3" fill="#050b18"/>
+<circle cx="240" cy="226" r="46" fill="none" stroke="#22d3ee" stroke-opacity=".5"><animate attributeName="r" values="30;70" dur="2s" repeatCount="indefinite"/><animate attributeName="stroke-opacity" values=".6;0" dur="2s" repeatCount="indefinite"/></circle>
+<text x="16" y="32" fill="#22d3ee" font-size="12">● AI MONITORING · ILLUSTRATION</text></svg></section>
+<div class="grid g4">${[['gauge','Speed Monitoring','GPS-derived speed vs. the configured limit.'],['brain','Risk Analysis','Pattern-based scoring of risky driving.'],['bell','Calm Warnings','Clear alerts that avoid distraction.'],['shield','Privacy First','Consent, authentication, no auto-fines.']].map(f=>`<div class="card">${ico(I[f[0]])}<h3 style="margin:8px 0 4px;font-size:17px">${f[1]}</h3><div class="mut">${f[2]}</div></div>`).join('')}</div>`;}
+
+/* ---------- DRIVER ---------- */
+function driver(){
+let spd=0,lim=60,mode='demo',ev=0,t0=Date.now(),over=false,alerts=[],snd=false,watch=null,auto=null,share=false,ctx=null;
+app.innerHTML=`<div class="drv"><div class="demo" id="mb">Demo mode: speed is simulated. Switch to GPS to use your device's location.</div>
+<div class="card" style="text-align:center"><svg viewBox="0 0 220 200" width="100%"><circle cx="110" cy="110" r="90" fill="none" stroke="rgba(255,255,255,.08)" stroke-width="14" stroke-dasharray="424 566" transform="rotate(135 110 110)" stroke-linecap="round"/><circle id="arc" cx="110" cy="110" r="90" fill="none" stroke="#34d399" stroke-width="14" stroke-dasharray="0 566" transform="rotate(135 110 110)" stroke-linecap="round"/><text id="sv" x="110" y="116" text-anchor="middle" font-size="52" font-weight="700" fill="#eaf6ff">0</text><text x="110" y="140" text-anchor="middle" font-size="13" fill="#8fa6c0">km/h</text><text id="sl" x="110" y="172" text-anchor="middle" font-size="13" fill="#22d3ee"></text></svg>
+<div class="status s-ok" id="st">Safe Speed</div><div id="ex" class="mut" style="margin-top:8px;min-height:22px"></div></div>
+<div class="grid g4" style="margin-top:14px;grid-template-columns:1fr 1fr"><div class="card"><div class="lbl">Speed limit</div><div class="big" id="li">60</div></div><div class="card"><div class="lbl">Overspeed events</div><div class="big" id="ev">0</div></div><div class="card"><div class="lbl">Duration</div><div class="big" id="du" style="font-size:30px">00:00</div></div><div class="card"><div class="lbl">Current</div><div class="big" id="cu">0</div></div></div>
+<div class="card" style="margin-top:14px"><label style="margin-top:0">Road speed limit: <b id="lv">60</b> km/h</label><input type="range" id="lr" min="20" max="120" step="5" value="60">
+<label>Source</label><select id="md"><option value="demo">Demo simulator</option><option value="gps">Device GPS (Geolocation API)</option></select>
+<div id="sim"><label>Simulated speed: <b id="sp">0</b> km/h</label><input type="range" id="sr" min="0" max="140" value="0"><div style="margin-top:8px"><button class="btn g s" id="au">▶ Auto drive</button></div></div>
+<label><input type="checkbox" id="sn" style="width:auto"> Audible warning (soft tone, off by default)</label>
+<label><input type="checkbox" id="sh" style="width:auto"> Share my location with police (consent; not transmitted in demo)</label></div>
+<div class="card" style="margin-top:14px"><h3 style="font-size:16px">Recent alerts</h3><div id="al" class="mut">No alerts yet.</div></div>
+<p><button class="btn red" style="width:100%;margin-top:14px" id="em">Emergency · Call 112</button></p>
+<p class="mut" style="font-size:12px">GPS speed depends on device, signal and browser support and can lag or drop in tunnels. Use as an aid only; never operate while driving: let a passenger set it up.</p></div>`;
+const g=id=>document.getElementById(id);
+function beep(){if(!snd)return;try{ctx=ctx||new (window.AudioContext||window.webkitAudioContext)();const o=ctx.createOscillator(),v=ctx.createGain();o.frequency.value=660;v.gain.value=.08;o.connect(v);v.connect(ctx.destination);o.start();o.stop(ctx.currentTime+.25)}catch(e){}}
+function upd(){const r=Math.round(spd),d=r-lim;g('sv').textContent=r;g('cu').textContent=r;g('li').textContent=lim;g('sl').textContent='Limit '+lim;
+g('arc').setAttribute('stroke-dasharray',Math.min(r/160,1)*424+' 566');
+const st=g('st');let c='#34d399',k='s-ok',tx='Safe Speed';
+if(d>0){c='#f43f5e';k='s-bad';tx='Overspeed Detected';g('ex').innerHTML='<b style="color:#f43f5e">'+d+' km/h over the limit</b>'}else if(r>=lim*.9){c='#fbbf24';k='s-wa';tx='Approaching Speed Limit';g('ex').textContent='Close to the limit'}else g('ex').textContent='';
+st.className='status '+k;st.textContent=tx;g('arc').setAttribute('stroke',c);
+if(d>0&&!over){over=true;ev++;g('ev').textContent=ev;alerts.unshift(new Date().toLocaleTimeString()+' · '+r+' km/h in '+lim+' zone (+'+d+')');alerts=alerts.slice(0,5);g('al').innerHTML=alerts.map(a=>'<div style="padding:5px 0;border-bottom:1px solid var(--bd)">'+a+'</div>').join('');beep()}
+if(d<=0)over=false}
+const tick=setInterval(()=>{const s=Math.floor((Date.now()-t0)/1000);g('du').textContent=String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0')},1000);
+g('lr').oninput=e=>{lim=+e.target.value;g('lv').textContent=lim;upd()};
+g('sr').oninput=e=>{spd=+e.target.value;g('sp').textContent=spd;upd()};
+g('sn').onchange=e=>snd=e.target.checked;g('sh').onchange=e=>share=e.target.checked;
+g('au').onclick=()=>{if(auto){clearInterval(auto);auto=null;g('au').textContent='▶ Auto drive';return}g('au').textContent='⏸ Stop';let p=0;auto=setInterval(()=>{p+=.07;spd=Math.max(0,Math.round(55+45*Math.sin(p)));g('sr').value=spd;g('sp').textContent=spd;upd()},300)};
+g('md').onchange=e=>{mode=e.target.value;const mb=g('mb');
+if(watch!=null){navigator.geolocation.clearWatch(watch);watch=null}
+if(mode==='demo'){g('sim').style.display='';mb.textContent="Demo mode: speed is simulated. Switch to GPS to use your device's location.";return}
+g('sim').style.display='none';if(auto){g('au').click()}
+if(!navigator.geolocation){mb.textContent='Geolocation is not supported here. Staying in demo mode.';g('md').value='demo';g('sim').style.display='';return}
+mb.textContent='Requesting location permission…';
+watch=navigator.geolocation.watchPosition(p=>{const s=p.coords.speed;if(s==null||isNaN(s)){mb.textContent='GPS connected, but this device reports no speed yet. Start moving.';return}mb.textContent='Live GPS speed (accuracy ±'+Math.round(p.coords.accuracy)+' m)';spd=s*3.6;upd()},err=>{mb.textContent='Location error: '+err.message+'. Use demo mode instead.'},{enableHighAccuracy:true,maximumAge:1000})};
+g('em').onclick=()=>{if(confirm('Call emergency services (112)?')){location.href='tel:112';setTimeout(()=>alert('If this device cannot place calls, please dial 112 manually.'),900)}};
+upd();
+cleanup=()=>{clearInterval(tick);clearInterval(auto);if(watch!=null)navigator.geolocation.clearWatch(watch)};}
+
+/* ---------- POLICE ---------- */
+let authed=false,state=DEMO.map(a=>({...a}));
+function police(){
+if(!authed){app.innerHTML=`<div class="card" style="max-width:400px;margin:40px auto"><h2 style="font-size:24px">Police Console Sign-in</h2><div class="demo" style="margin-top:12px">Demo authentication only. Production requires server-side SSO, role-based access and audit logs. Use <b>officer</b> / <b>demo</b>.</div>
+<label>Username</label><input id="u" autocomplete="off"><label>Password</label><input id="p" type="password"><p id="er" style="color:var(--bad);min-height:20px"></p><button class="btn" style="width:100%" id="go">Sign in</button></div>`;
+$('#go').onclick=()=>{if($('#u').value==='officer'&&$('#p').value==='demo'){authed=true;police()}else $('#er').textContent='Invalid credentials.'};return}
+let q='',sv='All',df='All',sel=null,heat=false;
+app.innerHTML=`<div class="row" style="margin-bottom:10px"><div style="flex:3"><h2 style="font-size:28px">Smart Traffic Surveillance Center</h2><div class="mut">Authorized officer view · <span id="ws">WebSocket: not connected (demo feed)</span></div></div><div class="row" style="flex:0;white-space:nowrap"><button class="btn s" id="sm">Simulate alert</button><button class="btn g s" id="cn">Connect live feed</button><button class="btn g s" id="lo">Sign out</button></div></div>
+<div class="demo">DEMO DATA: all vehicles, locations and alerts are fictional samples. No live GPS, backend or police integration is connected. Vehicle IDs are anonymised; owners are never identified.</div>
+<div class="grid g4" id="kp"></div>
+<div class="pol" style="margin-top:14px"><div class="card"><div class="row"><h3 style="font-size:16px;flex:2">Live traffic map (demo)</h3><label style="margin:0;flex:0;white-space:nowrap"><input type="checkbox" id="ht" style="width:auto"> Heatmap</label></div><svg id="mp" viewBox="0 0 600 340" width="100%"></svg></div>
+<div class="card"><h3 style="font-size:16px">Alert details</h3><div id="dt" class="mut" style="margin-top:8px">Select an alert or marker.</div><h3 style="font-size:16px;margin-top:18px">High-risk zones</h3><div id="hz"></div></div></div>
+<div class="card" style="margin-top:14px"><div class="row"><input id="se" placeholder="Search vehicle ID (e.g. VEH-4137)"><select id="fs"><option>All</option><option>High</option><option>Medium</option><option>Low</option></select><select id="fd"><option value="All">Any time</option><option value="30">Last 30 min</option><option value="60">Last hour</option></select></div>
+<div class="tbl"><table><thead><tr><th>Vehicle</th><th>Speed</th><th>Limit</th><th>Excess</th><th>Location</th><th>Time</th><th>Severity</th><th>Status</th><th></th></tr></thead><tbody id="tb"></tbody></table></div></div>
+<div class="card" style="margin-top:14px"><h3 style="font-size:16px">Traffic activity (demo): overspeed events by hour</h3><svg id="ch" viewBox="0 0 600 150" width="100%"></svg></div>`;
+const g=id=>document.getElementById(id);
+const col=s=>s==='High'?'#f43f5e':s==='Medium'?'#fbbf24':'#34d399';
+function draw(){const L=state.filter(a=>(sv==='All'||a.sev===sv)&&(df==='All'||a.min<=+df)&&a.veh.toLowerCase().includes(q.toLowerCase()));
+const n=state.filter(a=>a.status!=='Resolved').length;
+g('kp').innerHTML=[['Total overspeed events',state.length],['Active alerts',n],['Resolved',state.length-n],['High-risk zones',LOC.length>4?3:0]].map(k=>`<div class="card"><div class="lbl">${k[0]}</div><div class="big">${k[1]}</div></div>`).join('');
+g('tb').innerHTML=L.map(a=>`<tr><td>${a.veh}</td><td>${a.spd}</td><td>${a.lim}</td><td>+${a.ex}</td><td>${a.loc}</td><td>${a.min}m ago</td><td><span class="sev ${a.sev}">${a.sev}</span></td><td>${a.status}</td><td><button class="btn g s" data-v="${a.id}">View</button> ${a.status==='New'?`<button class="btn s" data-a="${a.id}">Ack</button>`:''} ${a.status!=='Resolved'?`<button class="btn g s" data-r="${a.id}">Resolve</button>`:''}</td></tr>`).join('')||'<tr><td colspan="9" class="mut">No alerts match.</td></tr>';
+let m='<rect width="600" height="340" fill="#08142a" rx="12"/><g stroke="#16294a" stroke-width="14" fill="none"><path d="M0 120H600M0 260H600M120 0V340M300 0V340M500 0V340M0 60L600 300"/></g><g stroke="#22d3ee" stroke-opacity=".25" stroke-dasharray="6 8" fill="none"><path d="M0 120H600M0 260H600M120 0V340M300 0V340M500 0V340"/></g>';
+if(heat)m+='<defs><radialGradient id="hg"><stop offset="0" stop-color="#f43f5e" stop-opacity=".7"/><stop offset="1" stop-color="#f43f5e" stop-opacity="0"/></radialGradient></defs>'+state.map(a=>`<circle cx="${a.x}" cy="${a.y}" r="55" fill="url(#hg)"/>`).join('');
+m+=L.map(a=>`<g style="cursor:pointer" data-m="${a.id}"><circle cx="${a.x}" cy="${a.y}" r="${sel===a.id?13:8}" fill="${col(a.sev)}" ${a.status==='New'?'':'fill-opacity=".5"'} stroke="#fff" stroke-width="${sel===a.id?2:0}"/>${a.status==='New'?`<circle cx="${a.x}" cy="${a.y}" r="8" fill="none" stroke="${col(a.sev)}"><animate attributeName="r" values="8;22" dur="1.6s" repeatCount="indefinite"/><animate attributeName="opacity" values="1;0" dur="1.6s" repeatCount="indefinite"/></circle>`:''}</g>`).join('');
+m+='<text x="14" y="326" fill="#8fa6c0" font-size="11">Schematic demo map · no real positions</text>';g('mp').innerHTML=m;
+const z={};state.forEach(a=>z[a.loc]=(z[a.loc]||0)+1);g('hz').innerHTML=Object.entries(z).sort((a,b)=>b[1]-a[1]).slice(0,3).map(e=>`<div class="row" style="padding:6px 0;border-bottom:1px solid var(--bd)"><span style="flex:3">${e[0]}</span><b style="color:var(--bad);flex:0">${e[1]}×</b></div>`).join('');
+const sa=state.find(a=>a.id===sel);g('dt').innerHTML=sa?`<b>${sa.veh}</b> <span class="sev ${sa.sev}">${sa.sev}</span><br>Detected ${sa.spd} km/h in a ${sa.lim} km/h zone (+${sa.ex})<br>${sa.loc} · ${sa.min} min ago<br>Status: ${sa.status}<br><span class="mut" style="font-size:12px">No fine or owner lookup is performed by this system.</span>`:'Select an alert or marker.'}
+const H=[2,1,1,3,5,8,12,9,6,5,7,10,11,9,8,6,7,12,14,11,8,5,4,3];g('ch').innerHTML=H.map((v,i)=>`<rect x="${i*25+4}" y="${140-v*9}" width="18" height="${v*9}" rx="4" fill="#22d3ee" fill-opacity="${.3+v/20}"/>`).join('');
+draw();
+g('app')||0;
+app.onclick=e=>{const t=e.target.closest('[data-v],[data-a],[data-r],[data-m]');if(!t)return;const d=t.dataset,id=+(d.v||d.a||d.r||d.m),a=state.find(x=>x.id===id);if(d.a)a.status='Acknowledged';if(d.r)a.status='Resolved';sel=id;draw()};
+g('se').oninput=e=>{q=e.target.value;draw()};g('fs').onchange=e=>{sv=e.target.value;draw()};g('fd').onchange=e=>{df=e.target.value;draw()};g('ht').onchange=e=>{heat=e.target.checked;draw()};
+g('lo').onclick=()=>{authed=false;police()};
+function add(a){const ex=a.spd-a.lim;state.unshift({id:Date.now()+Math.random(),veh:a.veh,loc:a.loc,lim:a.lim,spd:a.spd,ex,x:a.x||100+Math.random()*400,y:a.y||60+Math.random()*220,min:0,status:'New',sev:ex>25?'High':ex>12?'Medium':'Low'});sel=state[0].id;draw()}
+g('sm').onclick=()=>{const L=LOC[Math.floor(Math.random()*6)],lim=[40,50,60,80][Math.floor(Math.random()*4)],ex=5+Math.floor(Math.random()*35);add({veh:'VEH-'+(1000+Math.floor(Math.random()*9000)),loc:L[0],lim,spd:lim+ex,x:L[2]+Math.random()*30,y:L[3]+Math.random()*25})};
+let ws=null;g('cn').onclick=()=>{if(ws){ws.close();return}const url=prompt('WebSocket URL (add ?token=YOURTOKEN if the backend requires one)','ws://localhost:8000/ws/alerts');if(!url)return;try{ws=new WebSocket(url)}catch(e){alert('Invalid WebSocket URL');return}g('ws').textContent='WebSocket: connecting…';ws.onopen=()=>{g('ws').textContent='WebSocket: connected (live backend)';g('cn').textContent='Disconnect'};ws.onmessage=e=>{try{add(JSON.parse(e.data))}catch(x){}};ws.onerror=()=>{if(g('ws'))g('ws').textContent='WebSocket: connection failed (demo data only)'};ws.onclose=()=>{ws=null;if(g('cn')){g('cn').textContent='Connect live feed'}}};
+cleanup=()=>{app.onclick=null;if(ws)ws.close()}}
+
+/* ---------- AI ---------- */
+function ai(){
+const S=['Vehicle GPS / Speed Data','Speed Limit Comparison','AI-Based Risk Analysis','Overspeed Detection','Driver Warning','Police Alert (only when configured and authorized)'];
+app.innerHTML=`<h2 style="font-size:34px">AI Technology</h2><p class="mut" style="max-width:640px">A pipeline from raw speed data to a calm warning for the driver, and an optional alert for authorized traffic staff.</p>
+<div class="grid g2"><div class="card flow">${S.map((s,i)=>`${i?'<div class="arrow">↓</div>':''}<div class="step"><i>${i+1}</i><b>${s}</b></div>`).join('')}</div>
+<div class="card"><h3>Risk score demo</h3><p class="mut">A transparent rule-based stand-in for the planned scikit-learn Random Forest model, which would train on features like these.</p>
+<label>Speed over limit: <b id="a1">10</b> km/h</label><input type="range" id="r1" min="0" max="60" value="10">
+<label>Hard-braking events (last 10 min): <b id="a2">1</b></label><input type="range" id="r2" min="0" max="10" value="1">
+<label>Night driving</label><select id="r3"><option value="0">No</option><option value="10">Yes</option></select>
+<div class="status s-ok" id="rs" style="margin-top:14px"></div></div></div>
+<div class="card" style="margin-top:14px"><h3>How AI improves safety</h3><p class="mut">Instead of one threshold, models learn patterns: repeated speeding on the same stretch, aggressive braking, and speed in risky conditions. This supports earlier, gentler warnings and helps authorities see which locations need attention. Planned stack: FastAPI backend, WebSocket alert streaming, scikit-learn Random Forest, with drivers' explicit consent for any data sharing.</p></div>`;
+const g=id=>document.getElementById(id);
+const f=()=>{const a=+g('r1').value,b=+g('r2').value,n=+g('r3').value;g('a1').textContent=a;g('a2').textContent=b;const s=Math.min(100,Math.round(a*1.2+b*5+n));g('rs').className='status '+(s>60?'s-bad':s>30?'s-wa':'s-ok');g('rs').textContent='Risk score '+s+'/100 · '+(s>60?'High':s>30?'Moderate':'Low')};
+['r1','r2','r3'].forEach(i=>g(i).oninput=f);f()}
+
+/* ---------- FEATURES / ABOUT ---------- */
+function features(){const F=[['gauge','Intelligent Overspeed Detection','Compares GPS speed with the configured limit.'],['bell','Real-Time Driver Warnings','Visual and optional audible alerts.'],['brain','AI-Based Risk Analysis','Scores risky driving patterns.'],['shield','Police Monitoring Console','Authenticated alert management.'],['map','Interactive Traffic Maps','See alerts and incidents by location.'],['flame','High-Risk Zone Identification','Heatmaps of repeated overspeeding.'],['phone','Emergency Assistance','One-tap access to emergency services.'],['chart','Traffic Analytics','Trends, totals and resolution status.']];
+app.innerHTML=`<h2 style="font-size:34px;margin-bottom:16px">Features</h2><div class="grid g2">${F.map(f=>`<div class="card">${ico(I[f[0]])}<h3 style="margin:10px 0 4px;font-size:18px">${f[1]}</h3><div class="mut">${f[2]}</div></div>`).join('')}</div>`}
+function about(){app.innerHTML=`<h2 style="font-size:34px">About the Project</h2><div class="card" style="margin:14px 0"><p style="font-size:18px;margin:0">Our goal is to use Artificial Intelligence and smart monitoring technology to reduce road accidents, encourage responsible driving, and support faster traffic safety responses.</p></div>
+<div class="grid g2"><div class="card"><h3>Future scope</h3><p class="mut">Advanced vehicle detection · Camera-based traffic monitoring · Predictive accident-risk analysis · Smart city integration · Advanced AI driving behavior analysis</p></div>
+<div class="card"><h3>Technology stack</h3><p class="mut"><b>Frontend:</b> React, Tailwind, Lucide, Recharts, maps (this demo is dependency-free)<br><b>Backend:</b> Python FastAPI, REST, WebSocket<br><b>AI/ML:</b> scikit-learn Random Forest<br><b>GPS:</b> Browser Geolocation API</p></div>
+<div class="card"><h3>Responsible by design</h3><p class="mut">Demo mode until real GPS, backend and authorized police integrations exist. Consent for location sharing, authenticated police access, no automatic fines, no owner identification, and non-distracting warnings.</p></div></div>`}
+
+const V={home,driver,police,ai,features,about};
+function route(){if(cleanup){cleanup();cleanup=null}const h=(location.hash||'#home').slice(1),k=V[h]?h:'home';
+$('#links').innerHTML=NAV.map(n=>`<a href="#${n[0]}" class="${n[0]===k?'on':''}">${n[1]}</a>`).join('');
+try{V[k]();scrollTo(0,0)}catch(e){app.innerHTML='<div class="card">Something went wrong loading this page.</div>'}}
+addEventListener('hashchange',route);route();
+</script></body></html>
